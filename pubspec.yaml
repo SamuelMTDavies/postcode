@@ -10,8 +10,6 @@ documentation: https://github.com/SamuelMTDavies/postcode/blob/main/README.md
 topics:
   - postal-code
   - validation
-  - iso-3166
-  - cldr
   - zip-code
   - postcode
   - address-validation
