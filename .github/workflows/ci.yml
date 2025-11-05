@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, claude/create-dart-post-package-011CUphMi2vDJdY9iM7JaoDn ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, claude/create-dart-post-package-011CUphMi2vDJdY9iM7JaoDn ]
 
 jobs:
   test:
