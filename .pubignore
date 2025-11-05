@@ -1,0 +1,33 @@
+# Files and directories to exclude from pub.dev publishing
+
+# GitHub specific
+.github/
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+PUBLISHING.md
+CONTRIBUTING.md
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+*.lcov
+
+# Build artifacts
+build/
+.dart_tool/
+
+# Local configuration
+.env
+.env.local

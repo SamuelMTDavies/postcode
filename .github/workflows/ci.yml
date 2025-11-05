@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop, claude/create-dart-post-package-011CUphMi2vDJdY9iM7JaoDn ]
+  pull_request:
+    branches: [ main, develop, claude/create-dart-post-package-011CUphMi2vDJdY9iM7JaoDn ]
+
+jobs:
+  test:
+    name: Test on Dart ${{ matrix.sdk }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        sdk: [stable, beta, dev]
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Print Dart version
+        run: dart --version
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+        if: matrix.sdk == 'stable'
+
+      - name: Analyze code
+        run: dart analyze --fatal-infos
+
+      - name: Run tests
+        run: dart test
+
+      - name: Check pub publish
+        run: dart pub publish --dry-run
+        if: matrix.sdk == 'stable'
+
+  coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Collect coverage
+        run: dart test --coverage=coverage
+
+      - name: Convert coverage to LCOV
+        run: |
+          dart pub global activate coverage
+          dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --report-on=lib
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage/lcov.info
+          fail_ci_if_error: false

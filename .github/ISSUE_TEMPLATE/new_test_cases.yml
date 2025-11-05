@@ -1,0 +1,108 @@
+name: Add Test Cases
+description: Suggest additional test cases to improve coverage
+title: "[Test Cases] "
+labels: ["enhancement", "tests", "test-coverage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve test coverage! Suggest new test cases for better validation.
+
+  - type: input
+    id: country_code
+    attributes:
+      label: Country Code
+      description: The ISO 3166-1 alpha-2 country code (e.g., US, GB, FR)
+      placeholder: "XX"
+    validations:
+      required: true
+
+  - type: input
+    id: country_name
+    attributes:
+      label: Country Name
+      description: Full country name
+      placeholder: "United States"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: test_category
+    attributes:
+      label: Test Category
+      description: What type of test cases are you suggesting?
+      options:
+        - "Edge cases"
+        - "Special formats"
+        - "Historical formats"
+        - "Regional variations"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: valid_examples
+    attributes:
+      label: Valid Postal Code Examples
+      description: Provide valid postal codes that should pass validation
+      placeholder: |
+        SW1A 1AA - UK government postcode
+        EC1A 1BB - Bank of England postcode
+        GIR 0AA - Special case postcode
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: invalid_examples
+    attributes:
+      label: Invalid Postal Code Examples
+      description: Provide invalid postal codes that should fail validation
+      placeholder: |
+        AAAA AAA - All letters (invalid)
+        12345 - US format in UK (invalid)
+        SW1A - Incomplete postcode (invalid)
+      value: ""
+    validations:
+      required: false
+
+  - type: textarea
+    id: edge_cases
+    attributes:
+      label: Edge Cases Description
+      description: Describe what makes these edge cases special or important
+      placeholder: "These are special postcodes used by government offices that have unique formats"
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source/Documentation
+      description: Link to documentation supporting these test cases
+      placeholder: "https://example.com/special-postcodes"
+      value: ""
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional Information
+      description: Any other context about these test cases
+      value: ""
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have verified these postal codes are real/valid
+          required: true
+        - label: These test cases are not already covered in the test suite
+          required: true
