@@ -340,13 +340,8 @@ This package follows [Semantic Versioning](https://semver.org/):
 - **MINOR** version for backwards-compatible functionality additions
 - **PATCH** version for backwards-compatible bug fixes
 
-Current version: **1.0.0**
+Current version: **1.0.1**
 
-## Related Packages
-
-- [phone_number](https://pub.dev/packages/phone_number) - Phone number validation
-- [email_validator](https://pub.dev/packages/email_validator) - Email validation
-- [international_phone_input](https://pub.dev/packages/international_phone_input) - International phone input widget
 
 ---
 
