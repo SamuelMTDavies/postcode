@@ -1,4 +1,5 @@
 import 'country_code.dart';
+import 'postcode_validation_error.dart';
 
 /// Result of a postal code validation.
 class PostcodeValidationResult {
@@ -11,15 +12,15 @@ class PostcodeValidationResult {
   /// The postal code that was validated.
   final String postalCode;
 
-  /// Optional error message if validation failed.
-  final String? errorMessage;
+  /// The type of validation error (if validation failed).
+  final PostcodeValidationError? error;
 
   /// Creates a new validation result.
   const PostcodeValidationResult({
     required this.isValid,
     required this.countryCode,
     required this.postalCode,
-    this.errorMessage,
+    this.error,
   });
 
   /// Creates a successful validation result.
@@ -38,60 +39,82 @@ class PostcodeValidationResult {
   factory PostcodeValidationResult.invalid(
     CountryCode countryCode,
     String postalCode,
-    String errorMessage,
+    PostcodeValidationError error,
   ) {
     return PostcodeValidationResult(
       isValid: false,
       countryCode: countryCode,
       postalCode: postalCode,
-      errorMessage: errorMessage,
+      error: error,
     );
   }
+
+  /// Returns the error message (if validation failed).
+  String? get errorMessage => error?.message;
+
+  /// Returns the error code (if validation failed).
+  String? get errorCode => error?.code;
 
   @override
   String toString() {
     if (isValid) {
       return 'PostcodeValidationResult(isValid: true, countryCode: ${countryCode.code}, postalCode: $postalCode)';
     }
-    return 'PostcodeValidationResult(isValid: false, countryCode: ${countryCode.code}, postalCode: $postalCode, error: $errorMessage)';
+    return 'PostcodeValidationResult(isValid: false, countryCode: ${countryCode.code}, postalCode: $postalCode, error: ${error?.code})';
   }
 }
 
 /// A comprehensive postal code validator for countries worldwide.
 ///
-/// This class provides validation for postal codes using ISO 3166-1 alpha-2
-/// country codes and regex patterns from the Unicode CLDR (Common Locale Data
-/// Repository) version 26.0.1.
+/// This class provides static methods for validating postal codes using
+/// ISO 3166-1 alpha-2 country codes and regex patterns from the Unicode
+/// CLDR (Common Locale Data Repository) version 26.0.1.
 ///
 /// Example:
 /// ```dart
-/// final checker = PostcodeChecker();
-/// final result = checker.validate(CountryCode.US, '12345');
+/// // Validate a postal code
+/// final result = PostcodeChecker.validate(CountryCode.US, '12345');
 /// print(result.isValid); // true
+///
+/// // Check if a country has postal codes
+/// print(PostcodeChecker.hasPostalCodes(CountryCode.GB)); // true
+///
+/// // Get the regex pattern
+/// final pattern = PostcodeChecker.getPostalCodePattern(CountryCode.CA);
 /// ```
 class PostcodeChecker {
-  /// Creates a new postal code checker.
-  const PostcodeChecker();
+  // Private constructor to prevent instantiation
+  PostcodeChecker._();
 
   /// Validates a postal code for the specified country.
   ///
   /// Returns a [PostcodeValidationResult] containing the validation status
-  /// and any error messages.
+  /// and any error information.
   ///
   /// Example:
   /// ```dart
-  /// final checker = PostcodeChecker();
-  /// final result = checker.validate(CountryCode.GB, 'SW1A 1AA');
+  /// final result = PostcodeChecker.validate(CountryCode.GB, 'SW1A 1AA');
   /// if (result.isValid) {
   ///   print('Valid UK postcode!');
+  /// } else {
+  ///   print('Error: ${result.errorMessage}');
   /// }
   /// ```
-  PostcodeValidationResult validate(
+  static PostcodeValidationResult validate(
     CountryCode countryCode,
     String postalCode,
   ) {
     // Trim whitespace for consistency
     final trimmedCode = postalCode.trim();
+
+    // Check for empty postal code
+    if (trimmedCode.isEmpty) {
+      return PostcodeValidationResult.invalid(
+        countryCode,
+        postalCode,
+        PostcodeValidationError.emptyPostalCode,
+      );
+    }
 
     // Get the regex pattern for this country
     final pattern = getPostalCodePattern(countryCode);
@@ -100,7 +123,7 @@ class PostcodeChecker {
       return PostcodeValidationResult.invalid(
         countryCode,
         postalCode,
-        'No postal code validation pattern available for ${countryCode.code}',
+        PostcodeValidationError.noPostalCodeSystem,
       );
     }
 
@@ -113,7 +136,7 @@ class PostcodeChecker {
     return PostcodeValidationResult.invalid(
       countryCode,
       postalCode,
-      'Postal code does not match the expected format for ${countryCode.code}',
+      PostcodeValidationError.invalidFormat,
     );
   }
 
@@ -126,11 +149,10 @@ class PostcodeChecker {
   ///
   /// Example:
   /// ```dart
-  /// final checker = PostcodeChecker();
-  /// final pattern = checker.getPostalCodePattern(CountryCode.US);
+  /// final pattern = PostcodeChecker.getPostalCodePattern(CountryCode.US);
   /// print(pattern); // \d{5}([ \-]\d{4})?
   /// ```
-  String? getPostalCodePattern(CountryCode countryCode) {
+  static String? getPostalCodePattern(CountryCode countryCode) {
     switch (countryCode) {
       // United Kingdom and Crown Dependencies
       case CountryCode.GB:
@@ -701,11 +723,10 @@ class PostcodeChecker {
   ///
   /// Example:
   /// ```dart
-  /// final checker = PostcodeChecker();
-  /// print(checker.hasPostalCodes(CountryCode.US)); // true
-  /// print(checker.hasPostalCodes(CountryCode.AO)); // false
+  /// print(PostcodeChecker.hasPostalCodes(CountryCode.US)); // true
+  /// print(PostcodeChecker.hasPostalCodes(CountryCode.AO)); // false
   /// ```
-  bool hasPostalCodes(CountryCode countryCode) {
+  static bool hasPostalCodes(CountryCode countryCode) {
     return getPostalCodePattern(countryCode) != null;
   }
 
@@ -713,11 +734,10 @@ class PostcodeChecker {
   ///
   /// Example:
   /// ```dart
-  /// final checker = PostcodeChecker();
-  /// final countries = checker.supportedCountries();
+  /// final countries = PostcodeChecker.supportedCountries();
   /// print('Supported countries: ${countries.length}');
   /// ```
-  List<CountryCode> supportedCountries() {
+  static List<CountryCode> supportedCountries() {
     return CountryCode.values.where(hasPostalCodes).toList();
   }
 }

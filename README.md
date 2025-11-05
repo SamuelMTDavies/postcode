@@ -10,7 +10,8 @@ A comprehensive Dart package for validating postal codes from countries worldwid
 - ✅ **Comprehensive Coverage**: Supports 170+ countries and territories
 - 🌍 **ISO 3166-1 Standard**: Uses official alpha-2 country codes
 - 🎯 **CLDR-Based Patterns**: Regex patterns from Unicode CLDR v26.0.1
-- 🔍 **Simple API**: Easy-to-use validation with detailed results
+- 🔍 **Simple Static API**: Clean, no-instantiation design
+- 🚨 **Type-Safe Error Handling**: Enum-based error types with clear messages
 - 📦 **Zero Dependencies**: No external dependencies required
 - 🧪 **Well Tested**: Comprehensive unit test coverage
 - 📚 **Well Documented**: Clear examples and API documentation
@@ -38,18 +39,16 @@ dart pub get
 import 'package:postcode_checker/postcode_checker.dart';
 
 void main() {
-  final checker = PostcodeChecker();
-
   // Validate a US ZIP code
-  final usResult = checker.validate(CountryCode.US, '12345');
+  final usResult = PostcodeChecker.validate(CountryCode.US, '12345');
   print(usResult.isValid); // true
 
   // Validate a UK postcode
-  final ukResult = checker.validate(CountryCode.GB, 'SW1A 1AA');
+  final ukResult = PostcodeChecker.validate(CountryCode.GB, 'SW1A 1AA');
   print(ukResult.isValid); // true
 
   // Validate an invalid postal code
-  final invalidResult = checker.validate(CountryCode.US, 'INVALID');
+  final invalidResult = PostcodeChecker.validate(CountryCode.US, 'INVALID');
   print(invalidResult.isValid); // false
   print(invalidResult.errorMessage); // Error description
 }
@@ -58,8 +57,7 @@ void main() {
 ### Working with Validation Results
 
 ```dart
-final checker = PostcodeChecker();
-final result = checker.validate(CountryCode.CA, 'K1A 0B1');
+final result = PostcodeChecker.validate(CountryCode.CA, 'K1A 0B1');
 
 if (result.isValid) {
   print('Valid postal code for ${result.countryCode.code}');
@@ -68,34 +66,57 @@ if (result.isValid) {
 }
 ```
 
+### Error Handling
+
+The package provides type-safe error handling with clear error messages:
+
+```dart
+// Empty postal code error
+final emptyResult = PostcodeChecker.validate(CountryCode.US, '');
+print(emptyResult.error); // PostcodeValidationError.emptyPostalCode
+print(emptyResult.errorCode); // 'EMPTY_POSTAL_CODE'
+print(emptyResult.errorMessage); // 'Postal code cannot be empty or contain only whitespace.'
+
+// Invalid format error
+final invalidResult = PostcodeChecker.validate(CountryCode.US, 'ABC');
+print(invalidResult.error); // PostcodeValidationError.invalidFormat
+print(invalidResult.errorCode); // 'INVALID_FORMAT'
+print(invalidResult.errorMessage); // 'The postal code does not match the expected format for this country.'
+
+// No postal code system error
+final noSystemResult = PostcodeChecker.validate(CountryCode.AO, '12345');
+print(noSystemResult.error); // PostcodeValidationError.noPostalCodeSystem
+print(noSystemResult.errorCode); // 'NO_POSTAL_CODE_SYSTEM'
+```
+
+Available error types:
+- `PostcodeValidationError.emptyPostalCode` - Empty or whitespace-only input
+- `PostcodeValidationError.invalidFormat` - Postal code doesn't match country pattern
+- `PostcodeValidationError.noPostalCodeSystem` - Country doesn't use postal codes
+- `PostcodeValidationError.unsupportedCountry` - Country code not recognized
+
 ### Check if a Country Has Postal Codes
 
 ```dart
-final checker = PostcodeChecker();
-
-print(checker.hasPostalCodes(CountryCode.US)); // true
-print(checker.hasPostalCodes(CountryCode.GB)); // true
-print(checker.hasPostalCodes(CountryCode.AO)); // false (Angola has no postal codes)
+print(PostcodeChecker.hasPostalCodes(CountryCode.US)); // true
+print(PostcodeChecker.hasPostalCodes(CountryCode.GB)); // true
+print(PostcodeChecker.hasPostalCodes(CountryCode.AO)); // false (Angola has no postal codes)
 ```
 
 ### Get Postal Code Pattern
 
 ```dart
-final checker = PostcodeChecker();
-
-final pattern = checker.getPostalCodePattern(CountryCode.US);
+final pattern = PostcodeChecker.getPostalCodePattern(CountryCode.US);
 print(pattern); // \d{5}([ \-]\d{4})?
 
-final caPattern = checker.getPostalCodePattern(CountryCode.CA);
+final caPattern = PostcodeChecker.getPostalCodePattern(CountryCode.CA);
 print(caPattern); // [ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]?\d[ABCEGHJ-NPRSTV-Z]\d
 ```
 
 ### List Supported Countries
 
 ```dart
-final checker = PostcodeChecker();
-
-final countries = checker.supportedCountries();
+final countries = PostcodeChecker.supportedCountries();
 print('Supported countries: ${countries.length}');
 
 for (final country in countries.take(5)) {
@@ -148,15 +169,13 @@ This package supports postal code validation for 170+ countries and territories,
 - 🇸🇦 Saudi Arabia (SA)
 - And more...
 
-See the [full list of supported countries](https://github.com/SamuelMTDavies/postcode/blob/main/SUPPORTED_COUNTRIES.md) or use `checker.supportedCountries()` to get a complete list.
+See the [full list of supported countries](https://github.com/SamuelMTDavies/postcode/blob/main/SUPPORTED_COUNTRIES.md) or use `PostcodeChecker.supportedCountries()` to get a complete list.
 
 ## Examples
 
 ### Validate Multiple Countries
 
 ```dart
-final checker = PostcodeChecker();
-
 final testCases = {
   CountryCode.US: ['12345', '12345-6789', 'INVALID'],
   CountryCode.GB: ['SW1A 1AA', 'M1 1AA', '12345'],
@@ -170,7 +189,7 @@ for (final entry in testCases.entries) {
 
   print('Testing ${country.code}:');
   for (final code in codes) {
-    final result = checker.validate(country, code);
+    final result = PostcodeChecker.validate(country, code);
     print('  ${code}: ${result.isValid}');
   }
 }
@@ -180,15 +199,13 @@ for (final entry in testCases.entries) {
 
 ```dart
 bool isValidPostalCode(String countryCode, String postalCode) {
-  final checker = PostcodeChecker();
-
   // Parse country code string to enum
   final country = CountryCode.values.firstWhere(
     (c) => c.code == countryCode.toUpperCase(),
     orElse: () => throw ArgumentError('Invalid country code: $countryCode'),
   );
 
-  return checker.validate(country, postalCode).isValid;
+  return PostcodeChecker.validate(country, postalCode).isValid;
 }
 
 // Usage

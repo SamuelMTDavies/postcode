@@ -11,16 +11,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release of postcode_checker package
 - Support for 170+ countries and territories using ISO 3166-1 alpha-2 country codes
 - Postal code validation using CLDR-based regex patterns (version 26.0.1)
-- `PostcodeChecker` class with the following methods:
-  - `validate()` - Validate a postal code for a specific country
-  - `getPostalCodePattern()` - Get the regex pattern for a country
-  - `hasPostalCodes()` - Check if a country has postal codes
-  - `supportedCountries()` - List all supported countries
-- `PostcodeValidationResult` class for detailed validation results
+- **Static API design** - All methods are static, no instantiation required:
+  - `PostcodeChecker.validate()` - Validate a postal code for a specific country
+  - `PostcodeChecker.getPostalCodePattern()` - Get the regex pattern for a country
+  - `PostcodeChecker.hasPostalCodes()` - Check if a country has postal codes
+  - `PostcodeChecker.supportedCountries()` - List all supported countries
+- **Type-safe error handling** with `PostcodeValidationError` enum:
+  - `emptyPostalCode` - Empty or whitespace-only input
+  - `invalidFormat` - Postal code doesn't match country pattern
+  - `noPostalCodeSystem` - Country doesn't use postal codes
+  - `unsupportedCountry` - Country code not recognized
+- `PostcodeValidationResult` class with:
+  - `isValid` - Boolean validation status
+  - `error` - Enum type of validation error
+  - `errorMessage` - Human-readable error message
+  - `errorCode` - Machine-readable error code
 - `CountryCode` enum with all ISO 3166-1 alpha-2 codes
 - `CountryCodeExtension` for easy access to country code strings
-- Comprehensive unit tests covering major countries and edge cases
-- Detailed documentation and examples
+- Comprehensive unit tests covering:
+  - Major countries and postal code formats
+  - All error types and edge cases
+  - Over 100 test cases
+- Detailed documentation with usage examples
 - Example application demonstrating all features
 
 ### Supported Regions
