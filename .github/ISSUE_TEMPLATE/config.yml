@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/SamuelMTDavies/postcode/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📚 Documentation
+    url: https://github.com/SamuelMTDavies/postcode/blob/main/README.md
+    about: Read the documentation
+  - name: 🔍 Supported Countries
+    url: https://github.com/SamuelMTDavies/postcode/blob/main/SUPPORTED_COUNTRIES.md
+    about: View the complete list of supported countries

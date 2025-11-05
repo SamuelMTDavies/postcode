@@ -1,0 +1,92 @@
+name: Missing Postal Code Pattern
+description: Report a country that's missing postal code validation support
+title: "[Missing Pattern] "
+labels: ["enhancement", "postal-code-pattern", "missing-pattern"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve postcode_checker! Please provide details about the missing postal code pattern.
+
+  - type: input
+    id: country_code
+    attributes:
+      label: Country Code
+      description: The ISO 3166-1 alpha-2 country code (e.g., US, GB, FR)
+      placeholder: "XX"
+    validations:
+      required: true
+
+  - type: input
+    id: country_name
+    attributes:
+      label: Country Name
+      description: Full country name
+      placeholder: "United States"
+    validations:
+      required: true
+
+  - type: textarea
+    id: postal_examples
+    attributes:
+      label: Valid Postal Code Examples
+      description: Provide 5-10 examples of valid postal codes for this country
+      placeholder: |
+        12345
+        98765
+        01234-5678
+      value: ""
+    validations:
+      required: true
+
+  - type: input
+    id: postal_format
+    attributes:
+      label: Postal Code Format Description
+      description: Describe the format (e.g., "5 digits" or "2 letters followed by 3 digits")
+      placeholder: "5 digits, optionally followed by hyphen and 4 digits"
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Official Source/Documentation
+      description: Link to official postal service documentation or reliable source
+      placeholder: "https://example.com/postal-code-format"
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: regex_suggestion
+    attributes:
+      label: Suggested Regex Pattern (Optional)
+      description: If you have a suggested regex pattern, provide it here
+      placeholder: "\\d{5}(-\\d{4})?"
+      value: ""
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional Information
+      description: Any other relevant information about this country's postal code system
+      value: ""
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have verified this country currently has no postal code pattern in the package
+          required: true
+        - label: I have provided official documentation as a source
+          required: true
+        - label: I have provided valid example postal codes
+          required: true

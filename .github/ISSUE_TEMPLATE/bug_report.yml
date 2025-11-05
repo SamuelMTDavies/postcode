@@ -1,0 +1,117 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug] "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill in the details below.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear description of what the bug is
+      placeholder: "PostcodeChecker.validate() throws an exception when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Call PostcodeChecker.validate(CountryCode.XX, '...')
+        2. Observe error
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: "Should return a PostcodeValidationResult with isValid = true"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: "Throws an exception / returns incorrect result"
+    validations:
+      required: true
+
+  - type: textarea
+    id: code_sample
+    attributes:
+      label: Code Sample
+      description: Minimal code sample to reproduce the issue
+      placeholder: |
+        ```dart
+        final result = PostcodeChecker.validate(CountryCode.US, '12345');
+        print(result.isValid);
+        ```
+      value: ""
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Package Version
+      description: Which version of postcode_checker are you using?
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: dart_version
+    attributes:
+      label: Dart Version
+      description: Output of `dart --version`
+      placeholder: "Dart SDK version: 3.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: What platform are you running on?
+      options:
+        - "Flutter (iOS)"
+        - "Flutter (Android)"
+        - "Flutter (Web)"
+        - "Flutter (Desktop)"
+        - "Dart VM"
+        - "Dart Web"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any other information that might be helpful
+      value: ""
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I am using the latest version of the package
+          required: false

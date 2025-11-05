@@ -3,7 +3,12 @@
 A comprehensive Dart package for validating postal codes from countries worldwide using ISO 3166-1 alpha-2 country codes and CLDR-based regex patterns.
 
 [![Pub Version](https://img.shields.io/pub/v/postcode_checker)](https://pub.dev/packages/postcode_checker)
+[![Pub Points](https://img.shields.io/pub/points/postcode_checker)](https://pub.dev/packages/postcode_checker/score)
+[![Pub Likes](https://img.shields.io/pub/likes/postcode_checker)](https://pub.dev/packages/postcode_checker)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+[![CI](https://github.com/SamuelMTDavies/postcode/workflows/CI/badge.svg)](https://github.com/SamuelMTDavies/postcode/actions)
+[![codecov](https://codecov.io/gh/SamuelMTDavies/postcode/branch/main/graph/badge.svg)](https://codecov.io/gh/SamuelMTDavies/postcode)
 
 ## Features
 

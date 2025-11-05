@@ -1,7 +1,28 @@
 name: postcode_checker
-description: A comprehensive Dart package for validating postal codes from countries worldwide using ISO 3166-1 alpha-2 country codes and CLDR-based regex patterns.
+description: Validate postal codes for 170+ countries using ISO 3166-1 alpha-2 codes and CLDR regex patterns. Type-safe error handling with static API.
 version: 1.0.0
+
+homepage: https://github.com/SamuelMTDavies/postcode
 repository: https://github.com/SamuelMTDavies/postcode
+issue_tracker: https://github.com/SamuelMTDavies/postcode/issues
+documentation: https://github.com/SamuelMTDavies/postcode/blob/main/README.md
+
+topics:
+  - postal-code
+  - validation
+  - iso-3166
+  - cldr
+  - zip-code
+  - postcode
+  - address-validation
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
 
 environment:
   sdk: ^3.0.0

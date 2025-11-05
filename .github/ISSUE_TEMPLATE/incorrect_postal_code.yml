@@ -1,0 +1,121 @@
+name: Incorrect Postal Code Pattern
+description: Report a postal code pattern that incorrectly validates or rejects postal codes
+title: "[Incorrect Pattern] "
+labels: ["bug", "postal-code-pattern", "incorrect-pattern"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please provide details about the incorrect postal code validation.
+
+  - type: input
+    id: country_code
+    attributes:
+      label: Country Code
+      description: The ISO 3166-1 alpha-2 country code (e.g., US, GB, FR)
+      placeholder: "XX"
+    validations:
+      required: true
+
+  - type: input
+    id: country_name
+    attributes:
+      label: Country Name
+      description: Full country name
+      placeholder: "United States"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Issue Type
+      description: What type of validation issue is this?
+      options:
+        - "Valid postal code is rejected (false negative)"
+        - "Invalid postal code is accepted (false positive)"
+        - "Pattern is completely incorrect"
+    validations:
+      required: true
+
+  - type: textarea
+    id: failing_examples
+    attributes:
+      label: Failing Examples
+      description: Provide postal codes that are incorrectly validated
+      placeholder: |
+        SW1A 1AA - This valid UK postcode is rejected
+        INVALID1 - This invalid code is accepted
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_pattern
+    attributes:
+      label: Current Pattern
+      description: The current regex pattern (use PostcodeChecker.getPostalCodePattern())
+      placeholder: "\\d{5}"
+      value: ""
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested_pattern
+    attributes:
+      label: Suggested Correct Pattern
+      description: Your suggested fix for the pattern
+      placeholder: "\\d{5}(-\\d{4})?"
+      value: ""
+    validations:
+      required: false
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Official Source/Documentation
+      description: Link to official postal service documentation proving the issue
+      placeholder: "https://example.com/postal-code-format"
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: test_cases
+    attributes:
+      label: Test Cases
+      description: Provide examples of valid and invalid postal codes for testing
+      placeholder: |
+        Valid:
+        - 12345
+        - 98765-4321
+
+        Invalid:
+        - 1234
+        - ABCDE
+      value: ""
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional Information
+      description: Any other relevant information
+      value: ""
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have verified the issue with the current package version
+          required: true
+        - label: I have provided official documentation as a source
+          required: true
+        - label: I have provided test cases for valid and invalid postal codes
+          required: true
