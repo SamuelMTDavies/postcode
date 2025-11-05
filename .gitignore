@@ -67,9 +67,3 @@ Thumbs.db
 *.bak
 *.tmp
 *~
-
-# GitHub Actions workflows
-# These files are excluded because they cannot be pushed via GitHub App
-# They need to be added manually to the repository via GitHub web interface
-# See .github/WORKFLOWS_README.md and SETUP_WORKFLOWS.md for instructions
-.github/workflows/
