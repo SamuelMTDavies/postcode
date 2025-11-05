@@ -34,7 +34,7 @@
 ///   print(pattern); // [ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ ]?\d[ABCEGHJ-NPRSTV-Z]\d
 /// }
 /// ```
-library postcode_checker;
+library;
 
 export 'src/country_code.dart';
 export 'src/postcode_checker.dart';
