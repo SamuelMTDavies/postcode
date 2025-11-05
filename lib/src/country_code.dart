@@ -1,7 +1,12 @@
+// ignore_for_file: constant_identifier_names
+
 /// ISO 3166-1 alpha-2 country codes.
 ///
 /// This enum represents all officially assigned country codes according to
 /// the ISO 3166-1 alpha-2 standard.
+///
+/// Note: The constant names intentionally use uppercase to match the
+/// ISO 3166-1 alpha-2 standard format.
 enum CountryCode {
   /// Afghanistan
   AF,

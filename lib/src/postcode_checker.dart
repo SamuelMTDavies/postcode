@@ -27,27 +27,25 @@ class PostcodeValidationResult {
   factory PostcodeValidationResult.valid(
     CountryCode countryCode,
     String postalCode,
-  ) {
-    return PostcodeValidationResult(
-      isValid: true,
-      countryCode: countryCode,
-      postalCode: postalCode,
-    );
-  }
+  ) =>
+      PostcodeValidationResult(
+        isValid: true,
+        countryCode: countryCode,
+        postalCode: postalCode,
+      );
 
   /// Creates a failed validation result.
   factory PostcodeValidationResult.invalid(
     CountryCode countryCode,
     String postalCode,
     PostcodeValidationError error,
-  ) {
-    return PostcodeValidationResult(
-      isValid: false,
-      countryCode: countryCode,
-      postalCode: postalCode,
-      error: error,
-    );
-  }
+  ) =>
+      PostcodeValidationResult(
+        isValid: false,
+        countryCode: countryCode,
+        postalCode: postalCode,
+        error: error,
+      );
 
   /// Returns the error message (if validation failed).
   String? get errorMessage => error?.message;
@@ -727,9 +725,8 @@ class PostcodeChecker {
   /// print(PostcodeChecker.hasPostalCodes(CountryCode.US)); // true
   /// print(PostcodeChecker.hasPostalCodes(CountryCode.AO)); // false
   /// ```
-  static bool hasPostalCodes(CountryCode countryCode) {
-    return getPostalCodePattern(countryCode) != null;
-  }
+  static bool hasPostalCodes(CountryCode countryCode) =>
+      getPostalCodePattern(countryCode) != null;
 
   /// Returns a list of all countries that have postal code validation patterns.
   ///
@@ -738,7 +735,6 @@ class PostcodeChecker {
   /// final countries = PostcodeChecker.supportedCountries();
   /// print('Supported countries: ${countries.length}');
   /// ```
-  static List<CountryCode> supportedCountries() {
-    return CountryCode.values.where(hasPostalCodes).toList();
-  }
+  static List<CountryCode> supportedCountries() =>
+      CountryCode.values.where(hasPostalCodes).toList();
 }
