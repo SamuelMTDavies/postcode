@@ -1,6 +1,6 @@
 name: postcode_checker
-description: Validate postal codes for 170+ countries using ISO 3166-1 alpha-2 codes and CLDR regex patterns. Type-safe error handling with static API.
-version: 1.0.1
+description: Validate postal codes for 170+ countries using countyr codes and CLDR regex patterns.
+version: 1.0.2
 
 homepage: https://github.com/SamuelMTDavies/postcode
 repository: https://github.com/SamuelMTDavies/postcode
@@ -26,5 +26,5 @@ environment:
   sdk: ^3.0.0
 
 dev_dependencies:
-  lints: ^3.0.0
-  test: ^1.24.0
+  lints: ^6.0.0
+  test: ^1.26.3

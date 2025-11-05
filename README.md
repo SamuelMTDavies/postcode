@@ -27,7 +27,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  postcode_checker: ^1.0.1
+  postcode_checker: ^1.0.2
 ```
 
 Then run:
@@ -307,12 +307,6 @@ Run the test suite:
 dart test
 ```
 
-Run tests with coverage:
-
-```bash
-dart test --coverage=coverage
-dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --report-on=lib
-```
 
 ## License
 
@@ -340,7 +334,7 @@ This package follows [Semantic Versioning](https://semver.org/):
 - **MINOR** version for backwards-compatible functionality additions
 - **PATCH** version for backwards-compatible bug fixes
 
-Current version: **1.0.1**
+Current version: **1.0.2**
 
 
 ---
