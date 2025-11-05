@@ -50,9 +50,12 @@ void main() {
 
   // Example 7: Check if countries have postal codes
   print('Example 7: Check Postal Code Support');
-  print('Does US have postal codes? ${PostcodeChecker.hasPostalCodes(CountryCode.US)}');
-  print('Does GB have postal codes? ${PostcodeChecker.hasPostalCodes(CountryCode.GB)}');
-  print('Does AO have postal codes? ${PostcodeChecker.hasPostalCodes(CountryCode.AO)}');
+  print(
+      'Does US have postal codes? ${PostcodeChecker.hasPostalCodes(CountryCode.US)}');
+  print(
+      'Does GB have postal codes? ${PostcodeChecker.hasPostalCodes(CountryCode.GB)}');
+  print(
+      'Does AO have postal codes? ${PostcodeChecker.hasPostalCodes(CountryCode.AO)}');
   print('');
 
   // Example 8: Get postal code pattern for a country

@@ -128,7 +128,8 @@ class PostcodeChecker {
     }
 
     // Validate against the pattern
-    final regex = RegExp(pattern);
+    // Use anchors to ensure the entire string matches the pattern
+    final regex = RegExp('^$pattern\$');
     if (regex.hasMatch(trimmedCode)) {
       return PostcodeValidationResult.valid(countryCode, postalCode);
     }
